@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Snippet</title>
+</head>
+<body>
+    <h1>View Snippet</h1>
+
+    {% if snippet.encrypted and not decrypted_content %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="key">Enter decryption key:</label>
+            <input type="password" name="key" id="key">
+            <button type="submit">Decrypt</button>
+        </form>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+    {% else %}
+        <p>{{ decrypted_content|default:snippet.content }}</p>
+    {% endif %}
+</body>
+</html>
